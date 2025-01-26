@@ -88,6 +88,11 @@ P.S. You can delete this when you're done too. It's your config now! :)
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
 -- disable netrw at the very start of your init.lua
+
+vim.opt_local.shiftwidth = 2
+vim.opt_local.tabstop = 2
+--vim.opt_local.expandtab = true
+
 vim.opt.expandtab = true
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
@@ -703,7 +708,7 @@ require("lazy").setup({
 			},
 		},
 		opts = {
-			notify_on_error = false,
+			notify_on_error = true,
 			format_on_save = function(bufnr)
 				-- Disable "format_on_save lsp_fallback" for languages that don't
 				-- have a well standardized coding style. You can add additional
@@ -716,6 +721,7 @@ require("lazy").setup({
 			end,
 			formatters_by_ft = {
 				lua = { "stylua" },
+				java = { "google-java-format", lsp_format = "fallback" },
 				-- Conform can also run multiple formatters sequentially
 				-- python = { "isort", "black" },
 				--
