@@ -89,8 +89,8 @@ P.S. You can delete this when you're done too. It's your config now! :)
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
 -- disable netrw at the very start of your init.lua
 
-vim.opt_local.shiftwidth = 2
-vim.opt_local.tabstop = 2
+-- vim.opt_local.shiftwidth = 2
+-- vim.opt_local.tabstop = 2
 --vim.opt_local.expandtab = true
 
 vim.opt.expandtab = true
@@ -701,27 +701,40 @@ require("lazy").setup({
 			{
 				"<leader>f",
 				function()
-					require("conform").format({ async = true, lsp_fallback = true })
+					require("conform").format({ async = true, lsp_format = "fallback" })
 				end,
 				mode = "",
 				desc = "[F]ormat buffer",
 			},
 		},
 		opts = {
-			notify_on_error = true,
+			log_level = vim.log.levels.DEBUG,
+			notify_on_error = false,
+			formatters = {
+				google_java_format = {
+					command = "google-java-format",
+					args = { "--aosp", "-" },
+				},
+			},
 			format_on_save = function(bufnr)
 				-- Disable "format_on_save lsp_fallback" for languages that don't
 				-- have a well standardized coding style. You can add additional
 				-- languages here or re-enable it for the disabled ones.
 				local disable_filetypes = { c = true, cpp = true }
+				local lsp_format_opt
+				if disable_filetypes[vim.bo[bufnr].filetype] then
+					lsp_format_opt = "never"
+				else
+					lsp_format_opt = "fallback"
+				end
 				return {
 					timeout_ms = 500,
-					lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
+					lsp_format = lsp_format_opt,
 				}
 			end,
 			formatters_by_ft = {
 				lua = { "stylua" },
-				java = { "google-java-format", lsp_format = "fallback" },
+				java = { "google_java_format" },
 				-- Conform can also run multiple formatters sequentially
 				-- python = { "isort", "black" },
 				--
