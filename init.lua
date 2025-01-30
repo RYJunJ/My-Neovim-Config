@@ -715,12 +715,20 @@ require("lazy").setup({
 					command = "google-java-format",
 					args = { "--aosp", "-" },
 				},
+				clang_format = {
+					command = "clang-format",
+					args = { "--style=Google", "-assume-filename", "$FILENAME" },
+				},
+				cpplint = {
+					command = "cpplint.py",
+					args = { "--extensions=c,h", "$FILENAME" },
+				},
 			},
 			format_on_save = function(bufnr)
 				-- Disable "format_on_save lsp_fallback" for languages that don't
 				-- have a well standardized coding style. You can add additional
 				-- languages here or re-enable it for the disabled ones.
-				local disable_filetypes = { c = true, cpp = true }
+				local disable_filetypes = { cpp = true }
 				local lsp_format_opt
 				if disable_filetypes[vim.bo[bufnr].filetype] then
 					lsp_format_opt = "never"
@@ -735,6 +743,7 @@ require("lazy").setup({
 			formatters_by_ft = {
 				lua = { "stylua" },
 				java = { "google_java_format" },
+				c = { "clang_format", "cpplint" },
 				-- Conform can also run multiple formatters sequentially
 				-- python = { "isort", "black" },
 				--
