@@ -636,7 +636,8 @@ require("lazy").setup({
 					settings = {
 						clangd = {
 							format = {
-								sortIncludes = false,
+								SortIncludes = Never,
+								BasedOnStyle = Google,
 							},
 						},
 					},
@@ -738,7 +739,7 @@ require("lazy").setup({
 				local disable_filetypes = { cpp = true }
 				local lsp_format_opt
 				if disable_filetypes[vim.bo[bufnr].filetype] then
-					lsp_format_opt = "never"
+					lsp_format_opt = "first"
 				else
 					lsp_format_opt = "fallback"
 				end
@@ -750,7 +751,8 @@ require("lazy").setup({
 			formatters_by_ft = {
 				lua = { "stylua" },
 				java = { "google_java_format" },
-				c = { "clang_format", "cpplint" },
+				-- c = { "clang_format", "cpplint" },
+				c = { "cpplint" },
 				-- Conform can also run multiple formatters sequentially
 				-- python = { "isort", "black" },
 				--
