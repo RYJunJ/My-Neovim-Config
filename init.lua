@@ -633,6 +633,13 @@ require("lazy").setup({
 						".git"
 					),
 					single_file_support = true,
+					settings = {
+						clangd = {
+							format = {
+								sortIncludes = false,
+							},
+						},
+					},
 				},
 				-- gopls = {},
 				-- pyright = {},
