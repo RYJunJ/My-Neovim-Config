@@ -633,14 +633,6 @@ require("lazy").setup({
 						".git"
 					),
 					single_file_support = true,
-					settings = {
-						clangd = {
-							format = {
-								SortIncludes = Never,
-								BasedOnStyle = Google,
-							},
-						},
-					},
 				},
 				-- gopls = {},
 				-- pyright = {},
@@ -723,10 +715,10 @@ require("lazy").setup({
 					command = "google-java-format",
 					args = { "--aosp", "-" },
 				},
-				clang_format = {
-					command = "clang-format",
-					args = { "--style=Google", "-assume-filename", "$FILENAME" },
-				},
+				-- clang_format = {
+				-- 	command = "clang-format",
+				-- 	args = { "--style=Google", "-assume-filename", "$FILENAME" },
+				-- },
 				cpplint = {
 					command = "cpplint.py",
 					args = { "--extensions=c,h", "$FILENAME" },
